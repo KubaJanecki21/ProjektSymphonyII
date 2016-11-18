@@ -1,0 +1,11 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #}
+ {% extends '::Base.html.twig' %}
+
+ {% block title %}My cool blog posts{% endblock %}
+
+ {% block main %}
+         {% for entry in name %}
+                 <h2>{{ entry.name }}</h2>
+                 <p>{{ entry.price }}</p>
+         {% endfor %}
+ {% endblock %}

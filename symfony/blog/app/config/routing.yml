@@ -1,0 +1,16 @@
+acme_store:
+    resource: "@AcmeStoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+acme_hello:
+    resource: "@AcmeHelloBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+hello:
+    path:  /hello/{name}
+    defaults: { _controller: AcmeHelloBundle:Hello:index }
