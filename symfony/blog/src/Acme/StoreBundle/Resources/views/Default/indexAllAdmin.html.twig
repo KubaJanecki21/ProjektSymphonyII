@@ -1,0 +1,86 @@
+{# src/Acme/BlogBundle/Resources/views/Blog/index.html.twig #}
+ {% extends '::Base.html.twig' %}
+
+ {% block title %}My cool blog posts{% endblock %}
+
+ {% block main %}
+     </br>
+
+     <table  class="sortable" width="80%" border="1" cellpadding="0" cellspacing="0" align="center">
+         <thead>
+         <tr style=" width:100%;font-weight:bold" align="center" >
+             <td>id</td>
+             <td>imie</td>
+             <td>nazwisko</td>
+             <td>numer</td>
+             <td>miasto</td>
+             <td>adres</td>
+         </tr>
+         </thead>
+         <tbody>
+         {% for entry in name %}
+             <tr>
+                 <td>{{ entry.id}}</td>
+                 <td>{{ entry.nazwisko }}</td>
+                 <td>{{ entry.imie }}</td>
+                 <td>{{ entry.numer }}</a></td>
+                 <td>{{ entry.miasto }}</td>
+                 <td>{{ entry.adres }}</td>
+             </tr>
+         {% endfor %}
+
+
+         </tbody>
+     </table>
+     </br></br>
+     <button id ="clear_button" align="left" name="clear_button" type="submit"> Pelna lista</button>
+     </br></br>
+     </br></br>
+     <table align="left" style="width:50%">
+         <tr>
+             <td>
+                 <form  action="http://localhost:8000/wszystko" method="POST" >
+                     Nazwisko:<br>
+                     <input type="text" name="nazwisko"><br>
+                     Imie:<br>
+                     <input type="text" name="imie"><br>
+                     Numer:<br>
+                     <input type="text" name="numer"><br>
+                     Miasto:<br>
+                     <input type="text" name="miasto"><br>
+                     Adres:<br>
+                     <input type="text" name="adres"><br>
+
+                     <script src = "jquery-1.9.1.js"></script>
+
+                     <br>
+                     <button id ="click_button" name="click_button" type="submit"> Szukaj</button>
+                     <button id ="add_button" name="add_button" type="submit"> Dodaj</button>
+
+                 </form>
+             </td>
+
+             <td valign="top">
+                 <form  action="http://localhost:8000/wszystko" method="POST" >
+                     ID:<br>
+                     <input type="text" name="id"><br>
+
+
+                     <script src = "jquery-1.9.1.js"></script>
+
+                     <br>
+                     <button id ="edit_button" name="edit_button" type="submit"> Edytuj</button>
+                     <button id ="del_button" name="del_button" type="submit"> Usuń</button>
+
+
+
+
+                 </form>
+             </td>
+         </tr>
+
+
+
+     </table>
+
+ {% endblock %}
