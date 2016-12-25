@@ -3,8 +3,9 @@ acme_store:
     type:     annotation
     prefix:   /
 
-acme_hello:
-    resource: "@AcmeHelloBundle/Resources/config/routing.yml"
+acme_kontakt:
+    resource: "@AcmeKontaktBundle/Controller/"
+    type:     annotation
     prefix:   /
 
 app:
@@ -12,5 +13,17 @@ app:
     type:     annotation
 
 hello:
-    path:  /hello/{name}
-    defaults: { _controller: AcmeHelloBundle:Hello:index }
+    path:  /ksiazka
+    defaults: { _controller: AcmeStoreBundle:Store:index }
+
+zakladka2:
+    path:  /telefony
+    defaults: { _controller: AcmeKontaktBundle:Kontakt:index }
+
+zakladka3:
+    path:  /wszystko
+    defaults: { _controller: AcmeAllBundle:All:index }
+
+zakladka4:
+    path:  /panel
+    defaults: { _controller: AcmeAllBundle:All:index }

@@ -8,16 +8,18 @@
          <thead>
          <tr style=" width:100%;font-weight:bold" align="center" >
              <td>id</td>
-             <td>imie</td>
-             <td>nazwisko</td>
+             <td>numer</td>
+             <td>miasto</td>
+             <td>adres</td>
          </tr>
          </thead>
          <tbody>
          {% for entry in name %}
              <tr>
                  <td>{{ entry.id}}</td>
-                 <td>{{ entry.imie }}</a></td>
-                 <td>{{ entry.nazwisko }}</td>
+                 <td>{{ entry.numer }}</a></td>
+                 <td>{{ entry.miasto }}</td>
+                 <td>{{ entry.adres }}</td>
              </tr>
          {% endfor %}
          </tbody>
