@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
 
-class AllController extends Controller
+class AdminController extends Controller
 {
 
     public function getWyniki(){
@@ -31,7 +31,7 @@ class AllController extends Controller
             ->getRepository('AcmeAllBundle:Osoba');
 
 
-        $wyniki = array(RekordEntity::class);
+        $wyniki = null;
 
         $tablicaKontakt = $repositoryKontakt->findAll();
 
@@ -76,16 +76,17 @@ class AllController extends Controller
             $request = Request::createFromGlobals();
 
             if($request->isMethod('POST')) {
-                $w=new Warunki(null);
-                $w->imie=$request->request->get('imie');
-                $w->nazwisko=$request->request->get('nazwisko');
-                $w->numer=$request->request->get('numer');
-                $w->miasto=$request->request->get('miasto');
-                $w->adres=$request->request->get('adres');
 
 
 
                 if (isset($_POST['click_button'])) {
+                    $w=new Warunki(null);
+                    $w->imie=$request->request->get('imie');
+                    $w->nazwisko=$request->request->get('nazwisko');
+                    $w->numer=$request->request->get('numer');
+                    $w->miasto=$request->request->get('miasto');
+                    $w->adres=$request->request->get('adres');
+
                     $wyniki_filtrowane = null;
                     $j = 0;
                     for ($i = 0; $i < count($wyniki); $i++) {
@@ -95,6 +96,13 @@ class AllController extends Controller
                         }
                     }
                 } else if(isset($_POST['add_button']))  {
+                    $w=new Warunki(null);
+                    $w->imie=$request->request->get('imie');
+                    $w->nazwisko=$request->request->get('nazwisko');
+                    $w->numer=$request->request->get('numer');
+                    $w->miasto=$request->request->get('miasto');
+                    $w->adres=$request->request->get('adres');
+
                     $osoba_add=new Osoba();
                     $osoba_add->setImie($w->imie);
                     $osoba_add->setNazwisko($w->nazwisko);
@@ -103,46 +111,15 @@ class AllController extends Controller
                     $kontakt_get=$this->getDoctrine()->getRepository("AcmeAllBundle:Kontakt")->findOneBy(array('numer' => $w->numer));
                     if(($kontakt_get==null)&&($w->imie!="")&&($w->nazwisko!="")&&($w->adres!="")&&($w->miasto!="")&&($w->numer!="")) {
                         $osoba_wynik=new Osoba();
-                        $osoba_get=array();
-                        $osoba_get=$this->getDoctrine()->getRepository("AcmeAllBundle:Osoba")->findBy(array('imie' => $osoba_add->getImie(), 'nazwisko' => $osoba_add->getNazwisko()));
-                        if($osoba_get==null) {
+                        //$osoba_get=array();
+                        //$osoba_get=$this->getDoctrine()->getRepository("AcmeAllBundle:Osoba")->findBy(array('imie' => $osoba_add->getImie(), 'nazwisko' => $osoba_add->getNazwisko()));
+                        //if($osoba_get==null) {
                             $em->persist($osoba_add);
                             $em->flush();
-                            $osoba_wynik=$this->getDoctrine()->getRepository("AcmeAllBundle:Osoba")->findOneBy(array('imie' => $osoba_add->getImie(), 'nazwisko' => $osoba_add->getNazwisko()));
+                            //$osoba_wynik=$this->getDoctrine()->getRepository("AcmeAllBundle:Osoba")->findOneBy(array('imie' => $osoba_add->getImie(), 'nazwisko' => $osoba_add->getNazwisko()));
 
-                        } /*else{
-                            $istnieje=false;
-                            for ($i = 0; $i < count($osoba_get); $i++) {
-                                $id=$osoba_get[$i]->id;
-                                $kontakt_tab=$this->getDoctrine()->getRepository("AcmeAllBundle:Kontakt")->findOneBy(array('id' => $id));
-                                if(($kontakt_tab->miasto==$w->miasto)&&($kontakt_tab->adres==$w->adres)){
-                                    $istnieje=true;
-                                    $osoba_wynik=$osoba_get[$i];
-                                    break;
-                                }
-
-                            }
-                            if($istnieje==false){
-                                $em->persist($osoba_add);
-                                $em->flush();
-
-                                $osoby_takie_same=$this->getDoctrine()->getRepository("AcmeAllBundle:Osoba")->findBy(array('imie' => $osoba_add->getImie(), 'nazwisko' => $osoba_add->getNazwisko()));
-                                for ($i = 0; $i < count($osoby_takie_same); $i++) {
-                                    $id=$osoba_get[$i]->id;
-                                    $kontakty_wszystkie=$this->getDoctrine()->getRepository("AcmeAllBundle:Kontakt")->findAll();
-                                    $znaleziono=false;
-                                    for ($j = 0; $j < count($kontakty_wszystkie); $j++) {
-                                        if($kontakty_wszystkie[$j]->id_parent==$id) $znaleziono=true;
-                                    }
-                                    if($znaleziono==false) {
-                                        $osoba_wynik=$this->getDoctrine()->getRepository("AcmeAllBundle:Osoba")->findOneBy(array('id' => $id));
-                                        break;
-                                    }
-
-                                }
-                            }
-                        }*/
-                        $id_new=$osoba_wynik->getId();
+                        //}
+                        $id_new=$osoba_add->getId();
 
                         $kontakt_add=new Kontakt();
                         $kontakt_add->setId_parent($id_new);
@@ -163,7 +140,56 @@ class AllController extends Controller
                 } else if(isset($_POST['clear_button'])){
                     $wyniki_filtrowane=$this->getWyniki();
                 }
+                else if (isset($_POST['del_button'])) {
+                    $id=$request->request->get('id');
+                    if ($id != "") {
 
+
+                        $em = $this->getDoctrine()->getManager();
+                        $kontakt_del = new Kontakt();
+                        $kontakt_del = $em->getRepository("AcmeStoreBundle:Kontakt")->findOneBy(array('id' => $id));
+                        $id_p = $kontakt_del->id_parent;
+                        $em->remove($kontakt_del);
+                        $em->flush();
+                        $osoba_del = $this->getDoctrine()->getRepository("AcmeAllBundle:Osoba")->findOneBy(array('id' => $id_p));
+                        $em->remove($osoba_del);
+                        $em->flush();
+
+                    }
+                    $wyniki_filtrowane = $this->getWyniki();
+                }
+                else if (isset($_POST['edit_button'])) {
+                    $w = new Warunki(null);
+                    $w->imie = $request->request->get('imie');
+                    $w->nazwisko = $request->request->get('nazwisko');
+                    $w->numer = $request->request->get('numer');
+                    $w->miasto = $request->request->get('miasto');
+                    $w->adres = $request->request->get('adres');
+                    $w->id = $request->request->get('id');
+
+                    if (($w->imie != "") && ($w->nazwisko != "") && ($w->adres != "") && ($w->miasto != "") && ($w->numer != "") && ($w->id != "")) {
+
+                    $em = $this->getDoctrine()->getManager();
+                    $kontakt_up = new Kontakt();
+                    $kontakt_up = $em->getRepository("AcmeStoreBundle:Kontakt")->findOneBy(array('id' => $w->id));
+                    $id_p = $kontakt_up->id_parent;
+                    $osoba_up = $this->getDoctrine()->getRepository("AcmeAllBundle:Osoba")->findOneBy(array('id' => $id_p));
+
+                        $kontakt_up->numer=$w->numer;
+                        $kontakt_up->miasto=$w->miasto;
+                        $kontakt_up->adres=$w->adres;
+
+                        $osoba_up->imie=$w->imie;
+                        $osoba_up->nazwisko=$w->nazwisko;
+
+                        $em->flush();
+
+
+
+
+                    }
+                    $wyniki_filtrowane = $this->getWyniki();
+                }
                 //$imie_war = $request->request->get('imie');
 
 
@@ -188,7 +214,7 @@ class AllController extends Controller
             }*/
 
             return $this->render(
-                "AcmeStoreBundle:Default:indexAll.html.twig", array('name' => $wyniki_filtrowane)
+                "AcmeStoreBundle:Default:indexAdmin.html.twig", array('name' => $wyniki_filtrowane)
             );
 
 

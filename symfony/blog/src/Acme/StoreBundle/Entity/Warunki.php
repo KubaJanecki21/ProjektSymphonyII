@@ -24,6 +24,7 @@ class Warunki
 
     public function compare(RekordEntity $rekord){
 
+
         if($this->imie!=""){
             if($rekord->imie!=$this->imie) return false;
         }

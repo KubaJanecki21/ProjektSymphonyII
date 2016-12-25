@@ -10,24 +10,26 @@
          <thead>
          <tr style=" width:100%;font-weight:bold" align="center" >
              <td>id</td>
-             <td>imie</td>
              <td>nazwisko</td>
+             <td>imie</td>
              <td>numer</td>
              <td>miasto</td>
              <td>adres</td>
          </tr>
          </thead>
          <tbody>
-         {% for entry in name %}
-             <tr>
-                 <td>{{ entry.id}}</td>
-                 <td>{{ entry.nazwisko }}</td>
-                 <td>{{ entry.imie }}</td>
-                 <td>{{ entry.numer }}</a></td>
-                 <td>{{ entry.miasto }}</td>
-                 <td>{{ entry.adres }}</td>
-             </tr>
-         {% endfor %}
+         {% if name %}
+             {% for entry in name %}
+                 <tr>
+                     <td>{{ entry.id}}</td>
+                     <td>{{ entry.nazwisko }}</td>
+                     <td>{{ entry.imie }}</td>
+                     <td>{{ entry.numer }}</a></td>
+                     <td>{{ entry.miasto }}</td>
+                     <td>{{ entry.adres }}</td>
+                 </tr>
+             {% endfor %}
+         {%  endif %}
 
 
          </tbody>
@@ -36,10 +38,10 @@
      <button id ="clear_button" align="left" name="clear_button" type="submit"> Pelna lista</button>
      </br></br>
      </br></br>
-     <table align="left" style="width:50%">
+     <table align="left"  >
          <tr>
              <td>
-                 <form  action="http://localhost:8000/wszystko" method="POST" >
+                 <form  action="http://localhost:8000/panel" method="POST" >
                      Nazwisko:<br>
                      <input type="text" name="nazwisko"><br>
                      Imie:<br>
@@ -61,7 +63,7 @@
              </td>
 
              <td valign="top">
-                 <form  action="http://localhost:8000/wszystko" method="POST" >
+                 <form  action="http://localhost:8000/panel" method="POST" >
                      ID:<br>
                      <input type="text" name="id"><br>
 
@@ -69,14 +71,16 @@
                      <script src = "jquery-1.9.1.js"></script>
 
                      <br>
-                     <button id ="edit_button" name="edit_button" type="submit"> Edytuj</button>
-                     <button id ="del_button" name="del_button" type="submit"> Usuń</button>
 
+                     <button id ="del_button" name="del_button" type="submit"> Usuń</button>
+                     <button id ="edit_button" name="edit_button" type="submit"> Edytuj</button>
 
 
 
                  </form>
+
              </td>
+
          </tr>
 
 

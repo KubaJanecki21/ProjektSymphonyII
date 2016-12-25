@@ -26,4 +26,4 @@ zakladka3:
 
 zakladka4:
     path:  /panel
-    defaults: { _controller: AcmeAllBundle:All:index }
+    defaults: { _controller: AcmeAllBundle:Admin:index }
