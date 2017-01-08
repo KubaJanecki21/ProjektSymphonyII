@@ -199,19 +199,7 @@ class AdminController extends Controller
 
             }
 
-            /*$sort=array();   //metoda dziala tylko dla pelnego zbioru
-            for ($i = 0; $i < count($wyniki_filtrowane); $i++) {
-                $sort[$wyniki_filtrowane[$i]->id-1]=$wyniki_filtrowane[$i]->nazwisko;
-            }
-            asort($sort);
-            $wyniki_sortowane=array();
 
-            reset ($sort);
-            $j=0;
-            while (list ($klucz, $wartosc) = each ($sort)) {
-            $wyniki_sortowane[$j]=$wyniki_filtrowane[$klucz];
-                $j++;
-            }*/
 
             return $this->render(
                 "AcmeStoreBundle:Default:indexAdmin.html.twig", array('name' => $wyniki_filtrowane)

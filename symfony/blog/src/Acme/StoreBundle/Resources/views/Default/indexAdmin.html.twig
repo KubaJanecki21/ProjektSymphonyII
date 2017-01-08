@@ -35,13 +35,16 @@
          </tbody>
      </table>
      </br></br>
+     <form  action="http://localhost:8000/panel" method="POST" >
      <button id ="clear_button" align="left" name="clear_button" type="submit"> Pelna lista</button>
      </br></br>
      </br></br>
-     <table align="left"  >
+     <table align="left" style="width: 50%"  >
+
+
          <tr>
              <td>
-                 <form  action="http://localhost:8000/panel" method="POST" >
+
                      Nazwisko:<br>
                      <input type="text" name="nazwisko"><br>
                      Imie:<br>
@@ -53,22 +56,21 @@
                      Adres:<br>
                      <input type="text" name="adres"><br>
 
-                     <script src = "jquery-1.9.1.js"></script>
+
 
                      <br>
                      <button id ="click_button" name="click_button" type="submit"> Szukaj</button>
                      <button id ="add_button" name="add_button" type="submit"> Dodaj</button>
 
-                 </form>
+
              </td>
 
              <td valign="top">
-                 <form  action="http://localhost:8000/panel" method="POST" >
+
+
                      ID:<br>
                      <input type="text" name="id"><br>
 
-
-                     <script src = "jquery-1.9.1.js"></script>
 
                      <br>
 
@@ -77,7 +79,7 @@
 
 
 
-                 </form>
+
 
              </td>
 
@@ -85,6 +87,7 @@
 
 
 
-     </table>
 
+     </table>
+     </form>
  {% endblock %}
